@@ -86,14 +86,15 @@
 <body>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg">
+    <nav class="navbar navbar-expand-lg bg-warning">
+
         <div class="container">
-            <a class="navbar-brand" href="#">UMKM Store</a>
+            <img src="{{ asset('img/umkm_logo.png') }}" alt="Logo" height="60">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav ms-auto primary">
                     <li class="nav-item">
                         <a class="nav-link {{ request()->is('home') ? 'active' : '' }}" href="{{ url('/home') }}">Home</a>
                     </li>
