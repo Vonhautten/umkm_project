@@ -3,6 +3,22 @@
 @section('title', 'Beranda - UMKM Store')
 
 @section('content')
+<style>
+.carousel-control-prev,
+.carousel-control-next {
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px; /* Sesuaikan ukuran */
+    height: 50px;
+    background-color: rgba(255, 215, 0, 0.8); /* Warna emas transparan */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+</style>
 <div class="container">
     <!-- Hero Section -->
     <div class="row my-4">
@@ -15,13 +31,13 @@
                 </div>
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <img src="https://via.placeholder.com/1200x500" class="d-block w-100 rounded" alt="Slide 1">
+                        <img src="{{ asset('img/BANER_1.png') }}" class="d-block w-100 rounded" alt="Slide 1">
                     </div>
                     <div class="carousel-item">
-                        <img src="https://via.placeholder.com/1200x500" class="d-block w-100 rounded" alt="Slide 2">
+                        <img src="{{ asset('img/BANER_2.png') }}" class="d-block w-100 rounded" alt="Slide 2">
                     </div>
                     <div class="carousel-item">
-                        <img src="https://via.placeholder.com/1200x500" class="d-block w-100 rounded" alt="Slide 3">
+                        <img src="{{ asset('img/BANER_1.png') }}" class="d-block w-100 rounded" alt="Slide 3">
                     </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
