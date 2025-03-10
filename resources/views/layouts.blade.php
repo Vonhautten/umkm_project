@@ -99,7 +99,7 @@
                         <a class="nav-link {{ request()->is('home') ? 'active' : '' }}" href="{{ url('/home') }}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->is('produk') ? 'active' : '' }}" href="{{ url('/produk') }}">Produk</a>
+                        <a class="nav-link {{ request()->is('produk') ? 'active' : '' }}" href="{{ url('/admin/produk') }}">Produk</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ request()->is('about') ? 'active' : '' }}" href="{{ url('/about') }}">About Us</a>
