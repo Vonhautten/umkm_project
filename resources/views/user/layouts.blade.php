@@ -96,16 +96,16 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto primary">
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->is('home') ? 'active' : '' }}" href="{{ url('/home') }}">Home</a>
+                        <a class="nav-link {{ request()->is('user/home') ? 'active' : '' }}" href="{{ url('/user/home') }}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->is('produk') ? 'active' : '' }}" href="{{ url('/admin/produk') }}">Produk</a>
+                        <a class="nav-link {{ request()->is('user/produk') ? 'active' : '' }}" href="{{ url('/user/produk') }}">Produk</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->is('about') ? 'active' : '' }}" href="{{ url('/about') }}">About Us</a>
+                        <a class="nav-link {{ request()->is('user/about') ? 'active' : '' }}" href="{{ url('/about') }}">About Us</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->is('contact') ? 'active' : '' }}" href="{{ url('/contact') }}">Contact Us</a>
+                        <a class="nav-link {{ request()->is('user/contact') ? 'active' : '' }}" href="{{ url('/contact') }}">Contact Us</a>
                     </li>
                 </ul>
             </div>

@@ -1,4 +1,4 @@
-@extends('layouts')
+@extends('user.layouts')
 
 @section('title', 'Beranda - UMKM Store')
 
