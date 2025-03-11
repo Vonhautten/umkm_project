@@ -125,8 +125,5 @@
         });
     });
 </script>
-<<<<<<< HEAD
 @endsection
-=======
-@endsection
->>>>>>> 00fc7af460f6b619619e8523a676ba930e0a62b8
+
