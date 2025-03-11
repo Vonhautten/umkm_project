@@ -3,6 +3,7 @@
 @section('title', 'Produk - UMKM Store')
 
 @section('content')
+
 <div class="container my-4">
     <h2 class="text-center">Daftar Produk</h2>
     <div class="row">

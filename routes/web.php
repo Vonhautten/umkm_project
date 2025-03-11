@@ -11,6 +11,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+//============================ROUTE UNTUK LOGIN DAN SIGNUP============================
 // Route untuk login dan signup
 Route::post('/login', [LoginController::class, 'authenticated']);
 
@@ -25,9 +26,6 @@ Route::get('/signup', function () {
 })->name('signup');
 
 Route::post('/signup', [SignupController::class, 'register'])->name('register');
-
-
-//========================================================================
 
 //============================ROUTE UNTUK ADMIN============================
 Route::get('/admin/home', function () {
@@ -63,5 +61,6 @@ Route::get('/user/home', function () {
     return view('user.home');
 })->middleware('auth');
 
-Route::get('/user/produk', [ProdukController::class, 'index'])->middleware('auth');
+Route::get('/user/produk', [ProdukController::class, 'indexuser'])->middleware('auth');
+
 //========================================================================

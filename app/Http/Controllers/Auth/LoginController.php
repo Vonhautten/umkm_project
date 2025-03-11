@@ -24,6 +24,14 @@ class LoginController extends Controller
             return redirect('/user/home');
         }
 
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+
+            if ($user->role === 'user') {
+                return redirect('/user/home');
+            }
+            return redirect('/user/home');
+        }
         return back()->with('error', 'Email atau password salah.');
     }
 }

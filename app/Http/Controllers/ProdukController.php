@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ProdukController extends Controller
 {
+    //====================ADMIN====================
     public function index()
     {
         $produk = ProdukModel::all();
@@ -51,4 +52,12 @@ class ProdukController extends Controller
         ProdukModel::findOrFail($id)->delete();
         return redirect()->route('admin.produk.index')->with('success', 'Produk berhasil dihapus!');
     }
+
+        //====================USER====================
+        public function indexuser()
+        {
+            $produk = ProdukModel::all();
+            return view('user.produk', compact('produk'));
+        }
+        
 }
