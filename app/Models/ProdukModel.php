@@ -9,7 +9,7 @@ class ProdukModel extends Model
 {
     use HasFactory;
 
-    protected $table = 'tbl_produk'; // Menyesuaikan dengan nama tabel
+    protected $table = 'tbl_produk';
     protected $primaryKey = 'id';
 
     protected $fillable = [
