@@ -15,17 +15,24 @@
             justify-content: center;
             color: white;
         }
-        a{
-            text-decoration: none
-        }
         .login-container {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.221);
             padding: 40px;
-            border-radius: 12px;
+            border-radius: 30px;
+            border: solid white 5px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
             width: 100%;
-            max-width: 350px;
+            max-width: 700px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .left-section, .right-section {
+            flex: 1;
+            padding: 20px;
             text-align: center;
+        }
+        .left-section {
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
         }
         .form-control {
             border-radius: 8px;
@@ -45,9 +52,9 @@
         .btn-primary:hover {
             background: #008cff;
         }
-        .icon {
-            font-size: 50px;
-            margin-bottom: 20px;
+        .logo {
+            max-width: 200px;
+            margin-bottom: 15px;
         }
         a {
             color: white;
@@ -56,31 +63,45 @@
         a:hover {
             text-decoration: underline;
         }
+        @media (max-width: 768px) {
+            .login-container {
+                flex-direction: column;
+            }
+            .left-section {
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+                padding-bottom: 20px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="login-container">
-        @if (session('error'))
-        <div class="alert alert-danger">
-            {{ session('error') }}
+        <div class="left-section">
+            <img src="{{ asset('img/logo_doang.png') }}" class="logo" alt="Logo">
+            <h2 style="font-family: monospace;">TECH FRIEND</h2>
         </div>
-        @endif
 
-        <h1><b>LOGIN<b></h1>
-        <img src="{{ asset('img/logo_doang.png') }}" style="height: 10%" class="d-block w-100 rounded" alt="Slide 1">
-        <h2 style=" font-family: monospace;">TECH FRIEND</h2>
-        <form action="{{ route('login') }}" method="POST">
-            @csrf
-            <div class="mb-3">
-                <input type="email" class="form-control" id="email" name="email" required placeholder="Masukkan email">
+        <div class="right-section">
+            @if (session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
             </div>
-            <div class="mb-3">
-                <input type="password" class="form-control" id="password" name="password" required placeholder="Masukkan password">
+            @endif
+            <h3>Login</h3>
+            <form action="{{ route('login') }}" method="POST">
+                @csrf
+                <div class="mb-3">
+                    <input type="email" class="form-control" id="email" name="email" required placeholder="Masukkan email">
+                </div>
+                <div class="mb-3">
+                    <input type="password" class="form-control" id="password" name="password" required placeholder="Masukkan password">
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Login</button>
+            </form>
+            <div class="text-center mt-3">
+                <a href="/signup">Belum punya akun? Sign Up</a>
             </div>
-            <button type="submit" class="btn btn-primary w-100">Login</button>
-        </form>
-        <div class="text-center mt-3">
-            <a href="/signup">belum punya akun? sign up</a>
         </div>
     </div>
 </body>

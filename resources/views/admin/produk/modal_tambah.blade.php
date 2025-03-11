@@ -14,9 +14,10 @@
             <input type="number" name="harga" class="form-control mb-2" placeholder="Harga" required>
             <input type="number" name="stok" class="form-control mb-2" placeholder="Stok" required>
             <input type="file" name="gambar" class="form-control mb-2" required>
-            <button type="submit" class="btn btn-primary">Simpan</button>
-            <button type="button" class="btn btn-secondary" id="btnTutup">Tutup</button>
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-primary">Simpan</button>
+                <button type="button" class="btn btn-secondary" id="btnTutup">Tutup</button>
+            </div>
         </form>
     </div>
 </div>
-
