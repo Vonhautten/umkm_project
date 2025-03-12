@@ -23,7 +23,7 @@
      <!-- Hero Section -->
      <div class="row my-4">
          <div class="col-md-12">
-             <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2000">
                  <div class="carousel-indicators">
                      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"></button>
                      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"></button>
@@ -37,7 +37,7 @@
                          <img src="{{ asset('img/BANER_2.png') }}" class="d-block w-100 rounded" alt="Slide 2">
                      </div>
                      <div class="carousel-item">
-                         <img src="{{ asset('img/BANER_1.png') }}" class="d-block w-100 rounded" alt="Slide 3">
+                         <img src="{{ asset('img/BANER_3.png') }}" class="d-block w-100 rounded" alt="Slide 3">
                      </div>
                  </div>
                  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
