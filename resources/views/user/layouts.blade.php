@@ -84,6 +84,19 @@
          }
      </style>
  </head>
+
+ <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let alertBox = document.querySelector(".alert");
+        if (alertBox) {
+            setTimeout(() => {
+                alertBox.classList.add("fade");
+                setTimeout(() => alertBox.remove(), 500);
+            }, 3000); // Menghilangkan alert setelah 3 detik
+        }
+    });
+</script>
+
  <body>
  
      <!-- Navbar -->
@@ -107,6 +120,9 @@
                      </li>
                      <li class="nav-item">
                          <a class="nav-link {{ request()->is('user/contact') ? 'active' : '' }}" href="{{ url('/contact') }}">Contact Us</a>
+                     </li>
+                     <li class="nav-item">
+                         <a class="nav-link {{ request()->is('user/keranjang') ? 'active' : '' }}" href="{{ url('/keranjang') }}">Keranjang</a>
                      </li>
                      <li class="nav-item">
                         <a class="nav-link {{ request()->is('logout') ? 'active' : '' }}" href="{{ url('/login') }}">Logout</a>

@@ -3,7 +3,7 @@
  @section('title', 'Beranda - UMKM Store')
  
  @section('content')
- <style>
+ <style>   bbbbb                      
  .carousel-control-prev,
  .carousel-control-next {
      top: 50%;

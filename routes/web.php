@@ -5,6 +5,7 @@ use App\Http\Controllers\SignupController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\KeranjangController;
 use App\Http\Controllers\ProdukController;
 
 Route::get('/', function () {
@@ -53,7 +54,7 @@ Route::prefix('admin')->middleware('auth')->group(function () {
 });
 //========================================================================
 
-// Route untuk User
+//============================ROUTE UNTUK USER============================
 Route::get('/user/home', function () {
     if (Auth::check() && Auth::user()->role !== 'user') {
         return redirect('/');
@@ -62,5 +63,7 @@ Route::get('/user/home', function () {
 })->middleware('auth');
 
 Route::get('/user/produk', [ProdukController::class, 'indexuser'])->middleware('auth');
-
+Route::post('/keranjang/tambah/{id}', [KeranjangController::class, 'tambahKeKeranjang'])->name('keranjang.tambah');
+Route::get('/keranjang', [KeranjangController::class, 'lihatKeranjang'])->name('keranjang.lihat');
+Route::post('/keranjang/hapus/{id}', [KeranjangController::class, 'hapus'])->name('keranjang.hapus');
 //========================================================================
