@@ -116,10 +116,7 @@
                          <a class="nav-link {{ request()->is('user/produk') ? 'active' : '' }}" href="{{ url('/user/produk') }}">Produk</a>
                      </li>
                      <li class="nav-item">
-                         <a class="nav-link {{ request()->is('user/about') ? 'active' : '' }}" href="{{ url('/about') }}">About Us</a>
-                     </li>
-                     <li class="nav-item">
-                         <a class="nav-link {{ request()->is('user/contact') ? 'active' : '' }}" href="{{ url('/contact') }}">Contact Us</a>
+                         <a class="nav-link {{ request()->is('user/about') ? 'active' : '' }}" href="{{ url('/user/about') }}">About Us</a>
                      </li>
                      <li class="nav-item">
                          <a class="nav-link {{ request()->is('user/keranjang') ? 'active' : '' }}" href="{{ url('/keranjang') }}">Keranjang</a>

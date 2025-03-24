@@ -103,10 +103,7 @@
                          <a class="nav-link {{ request()->is('admin/produk') ? 'active' : '' }}" href="{{ url('/admin/produk') }}">Produk</a>
                      </li>
                      <li class="nav-item">
-                         <a class="nav-link {{ request()->is('admin/about') ? 'active' : '' }}" href="{{ url('/about') }}">About Us</a>
-                     </li>
-                     <li class="nav-item">
-                         <a class="nav-link {{ request()->is('admin/contact') ? 'active' : '' }}" href="{{ url('/contact') }}">Contact Us</a>
+                         <a class="nav-link {{ request()->is('admin/about') ? 'active' : '' }}" href="{{ url('admin/about') }}">About Us</a>
                      </li>
                      <li class="nav-item">
                         <a class="nav-link {{ request()->is('logout') ? 'active' : '' }}" href="{{ url('/login') }}">Logout</a>
