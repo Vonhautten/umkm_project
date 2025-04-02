@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PesananModel;
 use App\Models\ProdukModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 class KeranjangController extends Controller
 {
@@ -32,10 +34,7 @@ class KeranjangController extends Controller
         // Simpan kembali ke session
         Session::put('keranjang', $keranjang);
 
-        // Tambahkan notifikasi sukses
-        session()->flash('success', 'Produk berhasil ditambahkan ke keranjang!');
-
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Produk berhasil ditambahkan ke keranjang!');
     }
 
     public function lihatKeranjang()
@@ -46,24 +45,42 @@ class KeranjangController extends Controller
 
     public function hapus(Request $request, $id)
     {
-        $keranjang = session()->get('keranjang');
+        $keranjang = session()->get('keranjang', []);
 
-        // Cek apakah produk ada di keranjang
         if (isset($keranjang[$id])) {
-            $jumlahHapus = (int) $request->input('jumlah_hapus');
+            $jumlahHapus = (int) $request->input('jumlah_hapus', 1);
 
-            // Jika jumlah dihapus lebih kecil dari jumlah yang ada, cukup kurangi
             if ($keranjang[$id]['jumlah'] > $jumlahHapus) {
                 $keranjang[$id]['jumlah'] -= $jumlahHapus;
             } else {
-                // Jika jumlah yang dihapus sama atau lebih besar, hapus item dari keranjang
                 unset($keranjang[$id]);
             }
 
-            // Simpan kembali session keranjang
             session()->put('keranjang', $keranjang);
         }
 
         return redirect()->back()->with('success', 'Produk berhasil diperbarui di keranjang!');
+    }
+
+    public function beli(Request $request, $id)
+    {
+        $keranjang = session()->get('keranjang', []);
+
+        if (!isset($keranjang[$id])) {
+            return redirect()->back()->with('error', 'Produk tidak ditemukan di keranjang!');
+        }
+
+        PesananModel::create([
+            'id_user' => Auth::id(),
+            'produk_id' => $id,
+            'jumlah' => $keranjang[$id]['jumlah'],
+            'total_harga' => $keranjang[$id]['harga'] * $keranjang[$id]['jumlah'],
+            'status' => 'Menunggu Pembayaran'
+        ]);
+
+        unset($keranjang[$id]);
+        session()->put('keranjang', $keranjang);
+
+        return redirect()->route('pesanan.lihat')->with('success', 'Produk berhasil dibeli!');
     }
 }

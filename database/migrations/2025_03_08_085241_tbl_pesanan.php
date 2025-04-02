@@ -11,11 +11,14 @@ return new class extends Migration
         Schema::create('tbl_pesanan', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_user');
-            $table->string('status')->default('pending');
+            $table->unsignedBigInteger('produk_id');
+            $table->integer('jumlah');
             $table->integer('total_harga');
+            $table->string('status')->default('pending');
             $table->timestamps();
 
             $table->foreign('id_user')->references('id')->on('tbl_user')->onDelete('cascade');
+            $table->foreign('produk_id')->references('id')->on('tbl_produk')->onDelete('cascade');
         });
     }
 

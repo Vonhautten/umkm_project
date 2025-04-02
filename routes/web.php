@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\KeranjangController;
+use App\Http\Controllers\PesananController;
 use App\Http\Controllers\ProdukController;
 
 Route::get('/', function () {
@@ -59,6 +60,12 @@ Route::prefix('user')->middleware(['auth'])->group(function () {
     Route::post('/keranjang/tambah/{id}', [KeranjangController::class, 'tambahKeKeranjang'])->name('keranjang.tambah');
     Route::get('/keranjang', [KeranjangController::class, 'lihatKeranjang'])->name('keranjang.lihat');
     Route::post('/keranjang/hapus/{id}', [KeranjangController::class, 'hapus'])->name('keranjang.hapus');
+    Route::post('/keranjang/beli/{id}', [KeranjangController::class, 'beli'])->name('keranjang.beli');
+
+    // Pesanan hanya untuk user
+    Route::get('/pesanan', [PesananController::class, 'lihatPesanan'])->name('pesanan.lihat');
+    Route::post('/pesanan/{id}', [PesananController::class, 'store'])->name('pesanan.store');
+
 
     Route::get('/about', [AboutController::class, 'index'])->name('user.about');
 });
