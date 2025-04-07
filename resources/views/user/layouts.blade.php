@@ -125,6 +125,9 @@
                          <a class="nav-link {{ request()->is('user/pesanan') ? 'active' : '' }}" href="{{ url('/user/pesanan') }}">Pesanan</a>
                      </li>
                      <li class="nav-item">
+                         <a class="nav-link {{ request()->is('user/histori') ? 'active' : '' }}" href="{{ url('/user/histori') }}">Histori</a>
+                     </li>
+                     <li class="nav-item">
                         <a class="nav-link {{ request()->is('logout') ? 'active' : '' }}" href="{{ url('/login') }}">Logout</a>
                     </li>
                  </ul>

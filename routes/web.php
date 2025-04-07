@@ -64,8 +64,12 @@ Route::prefix('user')->middleware(['auth'])->group(function () {
 
     // Pesanan hanya untuk user
     Route::get('/pesanan', [PesananController::class, 'lihatPesanan'])->name('pesanan.lihat');
-    Route::post('/pesanan/{id}', [PesananController::class, 'store'])->name('pesanan.store');
+    Route::post('/pesanan', [PesananController::class, 'store'])->name('pesanan.store');
+    Route::post('/pesanan/{id}/batalkan', [PesananController::class, 'batalkan'])->name('pesanan.batalkan');
+    Route::post('/beli-langsung/{id}', [PesananController::class, 'beliLangsung'])->name('pesanan.beliLangsung');
 
+    Route::get('/histori', [PesananController::class, 'histori'])->name('pesanan.histori');
+    Route::delete('/histori/{id}', [PesananController::class, 'hapusHistori'])->name('pesanan.histori.hapus');
 
     Route::get('/about', [AboutController::class, 'index'])->name('user.about');
 });

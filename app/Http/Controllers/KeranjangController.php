@@ -2,46 +2,61 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PesananDetailModel;
 use App\Models\PesananModel;
 use App\Models\ProdukModel;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class KeranjangController extends Controller
 {
-    public function tambahKeKeranjang($id)
+    public function tambahKeKeranjang(Request $request, $id)
     {
         $produk = ProdukModel::findOrFail($id);
+        $jumlah = (int) $request->input('jumlah', 1); // <-- ambil jumlah dari input, default 1
 
-        // Ambil keranjang dari session atau buat array baru jika belum ada
         $keranjang = Session::get('keranjang', []);
 
-        // Jika produk sudah ada di keranjang, tambahkan jumlahnya
         if (isset($keranjang[$id])) {
-            $keranjang[$id]['jumlah'] += 1;
+            $keranjang[$id]['jumlah'] += $jumlah;
         } else {
-            // Jika belum ada, tambahkan produk ke keranjang
             $keranjang[$id] = [
                 'id' => $produk->id,
                 'nama' => $produk->nama_produk,
                 'harga' => $produk->harga,
                 'gambar' => $produk->gambar,
-                'jumlah' => 1
+                'jumlah' => $jumlah,
+                'stok' => $produk->stok,
             ];
         }
 
-        // Simpan kembali ke session
         Session::put('keranjang', $keranjang);
 
         return redirect()->back()->with('success', 'Produk berhasil ditambahkan ke keranjang!');
     }
 
+
     public function lihatKeranjang()
     {
         $keranjang = Session::get('keranjang', []);
+
+        // Pastikan setiap item punya stok
+        foreach ($keranjang as $id => $item) {
+            if (!isset($item['stok'])) {
+                $produk = ProdukModel::find($id);
+                if ($produk) {
+                    $keranjang[$id]['stok'] = $produk->stok;
+                } else {
+                    unset($keranjang[$id]); // kalau produk dihapus dari DB
+                }
+            }
+        }
+
+        Session::put('keranjang', $keranjang); // update session
         return view('user.keranjang', compact('keranjang'));
     }
+
 
     public function hapus(Request $request, $id)
     {
@@ -67,20 +82,63 @@ class KeranjangController extends Controller
         $keranjang = session()->get('keranjang', []);
 
         if (!isset($keranjang[$id])) {
-            return redirect()->back()->with('error', 'Produk tidak ditemukan di keranjang!');
+            return back()->with('error', 'Produk tidak ditemukan di keranjang.');
         }
 
-        PesananModel::create([
-            'id_user' => Auth::id(),
-            'produk_id' => $id,
-            'jumlah' => $keranjang[$id]['jumlah'],
-            'total_harga' => $keranjang[$id]['harga'] * $keranjang[$id]['jumlah'],
-            'status' => 'Menunggu Pembayaran'
+        $item = $keranjang[$id];
+
+        $request->validate([
+            'jumlah' => 'required|integer|min:1',
+            'alamat' => 'required|string|max:255',
+            'metode_bayar' => 'required|in:COD,transfer,qris',
         ]);
 
-        unset($keranjang[$id]);
+        $jumlahDibeli = (int) $request->jumlah;
+
+        // Cek apakah jumlah yang dibeli melebihi jumlah yang ada di keranjang
+        if ($jumlahDibeli > $item['jumlah']) {
+            return back()->with('error', 'Jumlah melebihi jumlah di keranjang.');
+        }
+
+        // Cek stok dari database
+        $produk = ProdukModel::find($id);
+
+        if (!$produk || $produk->stok < $jumlahDibeli) {
+            return back()->with('error', 'Stok produk tidak mencukupi.');
+        }
+
+        $totalHarga = $produk->harga * $jumlahDibeli;
+
+        // Buat pesanan
+        $pesanan = PesananModel::create([
+            'id_user' => Auth::id(),
+            'alamat' => $request->alamat,
+            'status' => 'Menunggu Pembayaran',
+            'total_harga' => $totalHarga,
+            'metode_bayar' => $request->metode_bayar,
+        ]);
+
+        // Tambah detail pesanan
+        PesananDetailModel::create([
+            'id_pesanan' => $pesanan->id,
+            'id_produk' => $produk->id,
+            'jumlah' => $jumlahDibeli,
+            'harga_satuan' => $produk->harga,
+        ]);
+
+        // Kurangi stok produk
+        $produk->stok -= $jumlahDibeli;
+        $produk->save();
+
+        // Update keranjang
+        if ($jumlahDibeli >= $item['jumlah']) {
+            unset($keranjang[$id]);
+        } else {
+            $keranjang[$id]['jumlah'] -= $jumlahDibeli;
+        }
+
         session()->put('keranjang', $keranjang);
 
-        return redirect()->route('pesanan.lihat')->with('success', 'Produk berhasil dibeli!');
+        return redirect()->route('pesanan.lihat')->with('success', 'Pesanan berhasil dibuat!');
     }
 }

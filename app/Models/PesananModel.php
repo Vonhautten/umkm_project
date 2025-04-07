@@ -14,21 +14,26 @@ class PesananModel extends Model
 
     protected $fillable = [
         'id_user',
-        'produk_id',
-        'jumlah',
         'total_harga',
-        'status'
+        'status',
+        'alamat',
+        'metode_bayar'
     ];
 
     // Relasi ke User
     public function user()
     {
-        return $this->belongsTo(User::class, 'id');
+        return $this->belongsTo(User::class, 'id_user');
     }
 
     // Relasi ke Produk
     public function produk()
     {
-        return $this->belongsTo(ProdukModel::class, 'id');
+        return $this->belongsTo(ProdukModel::class, 'produk_id');
+    }
+
+    public function details()
+    {
+        return $this->hasMany(PesananDetailModel::class, 'id_pesanan');
     }
 }
