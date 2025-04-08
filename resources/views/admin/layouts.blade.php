@@ -90,7 +90,9 @@
      <nav class="navbar navbar-expand-lg bg-warning">
  
          <div class="container">
-             <img src="{{ asset('img/umkm_logo.png') }}" alt="Logo" height="60">
+            <a href="{{ url('/admin/home') }}">
+                <img src="{{ asset('img/umkm_logo.png') }}" alt="Logo" height="60">
+            </a>
              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                  <span class="navbar-toggler-icon"></span>
              </button>
@@ -102,6 +104,9 @@
                      <li class="nav-item">
                          <a class="nav-link {{ request()->is('admin/produk') ? 'active' : '' }}" href="{{ url('/admin/produk') }}">Produk</a>
                      </li>
+                     <li class="nav-item">
+                         <a class="nav-link {{ request()->is('admin/pesanan') ? 'active' : '' }}" href="{{ url('/admin/pesanan') }}">Pesanan</a>
+                    </li>
                      <li class="nav-item">
                          <a class="nav-link {{ request()->is('admin/about') ? 'active' : '' }}" href="{{ url('admin/about') }}">About Us</a>
                      </li>

@@ -43,6 +43,10 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::delete('/produk/{id}', [ProdukController::class, 'destroy'])->name('admin.produk.destroy');
 
     Route::get('/about', [AboutController::class, 'index'])->name('admin.about');
+
+    Route::get('/pesanan', [PesananController::class, 'semuaPesanan'])->name('admin.pesanan');
+    Route::post('/pesanan/{id}/status', [PesananController::class, 'ubahStatus'])->name('admin.pesanan.ubahStatus');
+
 });
 
 //============================ROUTE UNTUK USER============================

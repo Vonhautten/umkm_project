@@ -171,4 +171,43 @@ class PesananController extends Controller
 
         return redirect()->back()->with('success', 'Histori pesanan berhasil dihapus.');
     }
+
+    // Menampilkan semua pesanan dari seluruh user (untuk admin)
+    public function semuaPesanan(Request $request)
+    {
+        $query = PesananModel::with(['user', 'details.produk'])
+            ->orderBy('created_at', 'desc');
+    
+        // Filter berdasarkan status
+        if ($request->has('status') && $request->status != '') {
+            $query->where('status', $request->status);
+        }
+    
+        // Pencarian berdasarkan nama user
+        if ($request->has('search') && $request->search != '') {
+            $query->whereHas('user', function ($q) use ($request) {
+                $q->where('nama', 'like', '%' . $request->search . '%');
+            });
+        }
+    
+        $pesanan = $query->get();
+    
+        return view('admin.pesanan', compact('pesanan'));
+    }
+    
+
+    // Mengubah status pesanan oleh admin
+    public function ubahStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|in:Menunggu Pembayaran,Diproses,Dikirim,Selesai,Dibatalkan',
+        ]);
+
+        $pesanan = PesananModel::findOrFail($id);
+        $pesanan->status = $request->status;
+        $pesanan->save();
+
+        return redirect()->back()->with('success', 'Status pesanan berhasil diperbarui.');
+    }
+
 }

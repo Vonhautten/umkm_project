@@ -103,7 +103,10 @@
      <nav class="navbar navbar-expand-lg bg-warning">
  
          <div class="container">
-             <img src="{{ asset('img/umkm_logo.png') }}" alt="Logo" height="60">
+            <a href="{{ url('/user/home') }}">
+                <img src="{{ asset('img/umkm_logo.png') }}" alt="Logo" height="60">
+            </a>
+            
              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                  <span class="navbar-toggler-icon"></span>
              </button>
@@ -116,9 +119,6 @@
                          <a class="nav-link {{ request()->is('user/produk') ? 'active' : '' }}" href="{{ url('/user/produk') }}">Produk</a>
                      </li>
                      <li class="nav-item">
-                         <a class="nav-link {{ request()->is('user/about') ? 'active' : '' }}" href="{{ url('/user/about') }}">About Us</a>
-                     </li>
-                     <li class="nav-item">
                          <a class="nav-link {{ request()->is('user/keranjang') ? 'active' : '' }}" href="{{ url('/user/keranjang') }}">Keranjang</a>
                      </li>
                      <li class="nav-item">
@@ -127,6 +127,9 @@
                      <li class="nav-item">
                          <a class="nav-link {{ request()->is('user/histori') ? 'active' : '' }}" href="{{ url('/user/histori') }}">Histori</a>
                      </li>
+                     <li class="nav-item">
+                         <a class="nav-link {{ request()->is('user/about') ? 'active' : '' }}" href="{{ url('/user/about') }}">About Us</a>
+                    </li>
                      <li class="nav-item">
                         <a class="nav-link {{ request()->is('logout') ? 'active' : '' }}" href="{{ url('/login') }}">Logout</a>
                     </li>
