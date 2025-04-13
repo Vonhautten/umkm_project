@@ -8,10 +8,17 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\KeranjangController;
 use App\Http\Controllers\PesananController;
 use App\Http\Controllers\ProdukController;
+use App\Http\Middleware\IsAdmin;
+use App\Http\Middleware\IsUser;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
+
+Route::post('/logout', function () {
+    Auth::logout();
+    return redirect('/login');
+})->name('logout');
 
 //============================ROUTE UNTUK LOGIN DAN SIGNUP============================
 // Route untuk login dan signup
@@ -28,11 +35,8 @@ Route::get('/signup', function () {
 Route::post('/signup', [SignupController::class, 'register'])->name('register');
 
 //============================ROUTE UNTUK ADMIN============================
-Route::prefix('admin')->middleware(['auth'])->group(function () {
+Route::prefix('admin')->middleware(['auth', IsAdmin::class])->group(function () {
     Route::get('/home', function () {
-        if (Auth::user()->role !== 'admin') {
-            return redirect('/')->with('error', 'Akses ditolak.');
-        }
         return view('admin.home');
     })->name('admin.home');
 
@@ -46,15 +50,12 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
 
     Route::get('/pesanan', [PesananController::class, 'semuaPesanan'])->name('admin.pesanan');
     Route::post('/pesanan/{id}/status', [PesananController::class, 'ubahStatus'])->name('admin.pesanan.ubahStatus');
-
 });
 
+
 //============================ROUTE UNTUK USER============================
-Route::prefix('user')->middleware(['auth'])->group(function () {
+Route::prefix('user')->middleware(['auth', IsUser::class])->group(function () {
     Route::get('/home', function () {
-        if (Auth::user()->role !== 'user') {
-            return redirect('/')->with('error', 'Akses ditolak.');
-        }
         return view('user.home');
     })->name('user.home');
 

@@ -20,20 +20,14 @@ class LoginController extends Controller
 
             if ($user->role === 'admin') {
                 return redirect('/admin/home');
-            }
-            return redirect('/user/home');
-        }
-
-        if (Auth::attempt($credentials)) {
-            $user = Auth::user();
-
-            if ($user->role === 'user') {
+            } elseif ($user->role === 'user') {
                 return redirect('/user/home');
+            } else {
+                Auth::logout(); // kalau role tidak dikenali, logout
+                return back()->with('error', 'Role tidak dikenali.');
             }
-            return redirect('/user/home');
         }
+
         return back()->with('error', 'Email atau password salah.');
     }
 }
-
-
