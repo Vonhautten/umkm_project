@@ -4,105 +4,136 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - UMKM Elektronik</title>
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.css') }}">
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background: #0D47A1;
+            background-color: #0D47A1;
             height: 100vh;
+            margin: 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
         }
-        .login-container {
-            background: rgba(255, 255, 255, 0.221);
-            padding: 40px;
-            border-radius: 30px;
-            border: solid white 5px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+
+        .main-container {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+            max-width: 900px;
             width: 100%;
-            max-width: 700px;
             display: flex;
             flex-wrap: wrap;
         }
-        .left-section, .right-section {
+
+        .left-side {
+            background-color: #6B73FF;
+            color: white;
+            padding: 40px;
             flex: 1;
-            padding: 20px;
-            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
-        .left-section {
-            border-right: 1px solid rgba(255, 255, 255, 0.2);
+
+        .left-side img {
+            max-width: 100px;
+            margin-bottom: 20px;
         }
+
+        .left-side h2 {
+            font-family: monospace;
+            font-weight: bold;
+        }
+
+        .right-side {
+            padding: 40px;
+            flex: 1;
+        }
+
         .form-control {
             border-radius: 8px;
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: white;
         }
-        .form-control::placeholder {
-            color: rgba(255, 255, 255, 0.7);
-        }
+
         .btn-primary {
-            background: white;
-            color: #0D47A1;
+            background: #6B73FF;
             border: none;
             border-radius: 8px;
+            transition: background 0.3s;
         }
+
         .btn-primary:hover {
-            background: #008cff;
+            background: #000DFF;
         }
-        .logo {
-            max-width: 200px;
-            margin-bottom: 15px;
+
+        .text-center a {
+            color: #6B73FF;
+            font-weight: 500;
         }
-        a {
-            color: white;
-            text-decoration: none;
-        }
-        a:hover {
+
+        .text-center a:hover {
             text-decoration: underline;
         }
+
+        .alert {
+            color: red;
+            font-size: 0.95rem;
+        }
+
         @media (max-width: 768px) {
-            .login-container {
+            .main-container {
                 flex-direction: column;
             }
-            .left-section {
-                border-right: none;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-                padding-bottom: 20px;
+
+            .left-side, .right-side {
+                width: 100%;
+                padding: 30px;
+            }
+
+            .left-side {
+                text-align: center;
             }
         }
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <div class="left-section">
-            <img src="{{ asset('img/logo_doang.png') }}" class="logo" alt="Logo">
-            <h2 style="font-family: monospace;">TECH FRIEND</h2>
-        </div>
 
-        <div class="right-section">
-            @if (session('error'))
-            <div class="alert alert-danger">
+<div class="main-container">
+    <div class="left-side">
+        <img src="{{ asset('img/logo_doang.png') }}" alt="Logo">
+        <h2>TECH FRIEND</h2>
+        <p class="mt-3 text-center">Login untuk mengakses layanan terbaik dari UMKM Elektronik!</p>
+    </div>
+
+    <div class="right-side">
+        <h4 class="text-center mb-4">Masuk ke Akun Anda</h4>
+
+        @if (session('error'))
+            <div class="alert alert-danger text-center">
                 {{ session('error') }}
             </div>
-            @endif
-            <h3>Login</h3>
-            <form action="{{ route('login') }}" method="POST">
-                @csrf
-                <div class="mb-3">
-                    <input type="email" class="form-control" id="email" name="email" required placeholder="Masukkan email">
-                </div>
-                <div class="mb-3">
-                    <input type="password" class="form-control" id="password" name="password" required placeholder="Masukkan password">
-                </div>
-                <button type="submit" class="btn btn-primary w-100">Login</button>
-            </form>
-            <div class="text-center mt-3">
-                <a href="/signup">Belum punya akun? Sign Up</a>
+        @endif
+
+        <form action="{{ route('login') }}" method="POST">
+            @csrf
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" required placeholder="Masukkan email">
             </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password" required placeholder="Masukkan password">
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Login</button>
+        </form>
+
+        <div class="text-center mt-3">
+            <a href="/signup">Belum punya akun? Sign Up</a>
         </div>
     </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

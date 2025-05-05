@@ -11,7 +11,8 @@
     </div>
 @endif
 
-<div class="container my-4">
+
+<div class="container my-4" style="min-height: 80vh;"> <!-- Menambahkan min-height untuk menghindari footer naik -->
     <h2 class="text-center">Daftar Produk</h2>
     <div class="row">
         @foreach($produk as $item)
@@ -80,6 +81,7 @@
                 </form>
             </div>
         </div>
+
         <!-- Modal Tambah ke Keranjang -->
         <div class="modal fade" id="keranjangModal{{ $item->id }}" tabindex="-1" aria-labelledby="keranjangModalLabel{{ $item->id }}" aria-hidden="true">
             <div class="modal-dialog">
