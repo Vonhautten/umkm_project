@@ -9,7 +9,7 @@
         @foreach($produk as $item)
         <div class="col-md-3 mb-4">
             <div class="card shadow-sm">
-                <img src="{{ asset('img/' . $item->gambar) }}" class="card-img-top" alt="{{ $item->nama_produk }}">
+                <img src="{{ asset('storage/' . $item->gambar) }}" class="card-img-top" alt="{{ $item->nama_produk }}">
                 <div class="card-body text-center">
                     <h5 class="card-title">{{ $item->nama_produk }}</h5>
                     <p class="card-text">{{ Str::limit($item->deskripsi, 50) }}</p>

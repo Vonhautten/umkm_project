@@ -3,51 +3,49 @@
 @section('title', 'Histori Pesanan - UMKM Store')
 
 @section('content')
-<div class="container my-4" style="min-height: 80vh;"> <!-- Menambahkan min-height untuk menghindari footer naik -->
-    <div class="container my-4">
-        <h2 class="text-center">Histori Pesanan</h2>
+<div class="container my-5" style="min-height: 80vh;"> <!-- Jaga footer tetap di bawah -->
+    <h2 class="text-center mb-4">Histori Pesanan</h2>
 
-        @if($pesananSelesai->isEmpty())
-            <p class="text-center">Belum ada pesanan yang selesai.</p>
-        @else
-            <div class="row">
-                @foreach($pesananSelesai as $order)
-                    <div class="col-md-6 mb-4">
-                        <div class="card shadow-sm h-100">
-                            <div class="card-body">
-                                <h5 class="card-title">Pesanan #{{ $order->id }}</h5>
+    @if($pesananSelesai->isEmpty())
+        <p class="text-center fs-5 text-muted">Belum ada pesanan yang selesai.</p>
+    @else
+        <div class="row gy-4">
+            @foreach($pesananSelesai as $order)
+                <div class="col-md-6 col-lg-4">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title mb-3">Pesanan #{{ $order->id }}</h5>
 
-                                {{-- Detail Produk --}}
-                                @foreach($order->details as $detail)
-                                    <div class="d-flex mb-3">
-                                        <img src="{{ asset('produk/' . $detail->produk->gambar) }}" width="60" height="60" class="me-3 rounded" style="object-fit: cover;">
-                                        <div>
-                                            <strong>{{ $detail->produk->nama_produk }}</strong><br>
-                                            Jumlah: {{ $detail->jumlah }}<br>
-                                            Harga Satuan: Rp {{ number_format($detail->harga_satuan, 0, ',', '.') }}<br>
-                                            Subtotal: Rp {{ number_format($detail->jumlah * $detail->harga_satuan, 0, ',', '.') }}
-                                        </div>
+                            {{-- Detail Produk --}}
+                            @foreach($order->details as $detail)
+                                <div class="d-flex mb-3 align-items-center">
+                                    <img src="{{ asset('storage/' . $detail->produk->gambar) }}" alt="{{ $detail->produk->nama_produk }}" width="60" height="60" class="rounded me-3" style="object-fit: cover;">
+                                    <div>
+                                        <strong class="d-block">{{ $detail->produk->nama_produk }}</strong>
+                                        <small>Jumlah: {{ $detail->jumlah }} | Harga Satuan: Rp {{ number_format($detail->harga_satuan, 0, ',', '.') }}</small><br> 
                                     </div>
-                                @endforeach
+                                </div>
+                            @endforeach
 
-                                <hr>
-                                <p><strong>Total Harga:</strong> Rp {{ number_format($order->total_harga, 0, ',', '.') }}</p>
-                                <p><strong>Alamat:</strong> {{ $order->alamat }}</p>
-                                <p><strong>Metode Bayar:</strong> {{ $order->metode_bayar }}</p>
-                                <p><strong>Tanggal Selesai:</strong> {{ $order->updated_at->format('d-m-Y') }}</p>
-                                <span class="badge bg-primary">Selesai</span>
-                                <form action="{{ route('pesanan.histori.hapus', $order->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus histori ini?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm mt-2">Hapus</button>
-                                </form>                            
-                            </div>
+                            <hr class="my-2">
+
+                            <p class="mb-1"><strong>Total Harga:</strong> <span class="text-success fs-5">Rp {{ number_format($order->total_harga, 0, ',', '.') }}</span></p>
+                            <p class="mb-1"><strong>Alamat:</strong> {{ $order->alamat }}</p>
+                            <p class="mb-1"><strong>Metode Bayar:</strong> {{ ucfirst($order->metode_bayar) }}</p>
+                            <p class="mb-3"><strong>Tanggal Selesai:</strong> {{ $order->updated_at->format('d-m-Y') }}</p>
+
+                            <span class="badge bg-primary mb-3 align-self-start">Selesai</span>
+
+                            <form action="{{ route('pesanan.histori.hapus', $order->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus histori ini?')" class="mt-auto">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm w-100">Hapus Histori</button>
+                            </form>                            
                         </div>
                     </div>
-                @endforeach
-            </div>
-        @endif
-    </div>
+                </div>
+            @endforeach
+        </div>
+    @endif
 </div>
 @endsection
-    
